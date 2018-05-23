@@ -87,14 +87,14 @@ if (isset($_POST['delete'])){
                 <div class="panel panel-default">
               <div class="panel-body" >
               <form action="" method="POST">
-               <input type="text" name="a_user_id" id="userid"  placeholder="user id" required autofocus>&nbsp;&nbsp;
-               <input type="text" name="a_name" id="comments"  placeholder="Name" required autofocus>&nbsp;&nbsp;
-                 <input type="text" name="a_phone" id="comments"  placeholder="Phone" required autofocus>&nbsp;&nbsp;
-                   <input type="text" name="a_p_no" id="comments"  placeholder="Parents No" required autofocus>&nbsp;&nbsp;
-                   <input type="text" name="a_email" id="comments"  placeholder="email" required autofocus>&nbsp;&nbsp;
-                  <input type="text" name="a_pass" id="a_pass"  placeholder="password" required autofocus>&nbsp;&nbsp;
+               <input type="text" name="a_user_id" id="userid" style="padding: 4px"; placeholder="user id"  required autofocus>&nbsp;&nbsp;
+               <input type="text" name="a_name" id="comments" style="padding: 4px"; placeholder="Name" required autofocus>&nbsp;&nbsp;
+                 <input type="text" name="a_phone" id="comments" style="padding: 4px"; placeholder="Phone" required autofocus>&nbsp;&nbsp;
+                   <input type="text" name="a_p_no" id="comments" style="padding: 4px"; placeholder="Parents No" required autofocus>&nbsp;&nbsp;
+                   <input type="text" name="a_email" id="comments" style="padding: 4px"; placeholder="email" required autofocus>&nbsp;&nbsp;
+                  <input type="text" name="a_pass" id="a_pass" style="padding: 4px"; placeholder="password" required autofocus>&nbsp;&nbsp;
            
-              <button class="submit" type="submit" name="add">Add</button>
+              <button class="submit" type="submit" style="padding: 4px"; name="add">Add</button>
             </form>
               </div>
             </div>
@@ -107,8 +107,8 @@ if (isset($_POST['delete'])){
               <div class="panel panel-default">
               <div class="panel-body" >
               <form action="" method="POST">
-               <input type="text" name="d_user_id" id="userid"  placeholder="user id" required autofocus>&nbsp;&nbsp;
-              <button class="submit" type="submit" name="delete">Delete</button>
+               <input type="text" name="d_user_id" id="userid" style="padding: 4px"; placeholder="user id" required autofocus>&nbsp;&nbsp;
+              <button class="submit" type="submit" style="padding: 4px"; name="delete">Delete</button>
             </form>
               </div>
             </div>
