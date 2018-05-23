@@ -1,5 +1,7 @@
 <?php
 session_start();    
+include 'function.php';
+check(); 
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -50,10 +52,10 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
       <div class="col-lg-12" style="text-align:right;">      
       <nav>
                 <ul class="nav masthead-nav">
-                  <li ><a href="faculty.php">Home</a></li>
-                  <li class="active"><a href="faculty_man_leave.php">Manage leave</a></li>
-                  <li><a href="faculty_man_stud.php">Manage students</a></li>
-                    <li><a href="faculty_report.php">Details</a></li>
+                  <li ><a href="admin.php">Home</a></li>
+                  <li class="active"><a href="admin_man_leave.php">Manage leave</a></li>
+                  <li><a href="admin_man_stud.php">Manage students</a></li>
+                    <li><a href="admin_report.php">Details</a></li>
                      <li><a href="php/logout.php">Sign out</a></li>
                 </ul>
           </nav></div>
@@ -104,24 +106,17 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
               <div class="panel panel-default">
   <div class="panel-body" >
   <form action="" method="POST">
-   <input type="text" name="user_id" id="userid"  placeholder="user id" required autofocus>&nbsp;&nbsp;&nbsp;&nbsp;
-   <input type="text" name="comments" id="comments"  placeholder="comments" required autofocus>&nbsp;&nbsp;&nbsp;
+   <input type="text" name="user_id" style="padding: 4px;width: 200px;" id="userid"  placeholder="user id" required autofocus>&nbsp;&nbsp;&nbsp;&nbsp;
+   <input type="text" name="comments" style="padding: 4px;width: 400px;" id="comments"  placeholder="comments" required autofocus>&nbsp;&nbsp;&nbsp;
  <label><input type="radio" name="app" value="app">&nbsp;&nbsp;&nbsp;Approve</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<label><input type="radio" name="app" value="rej">&nbsp;&nbsp;&nbsp;Reject</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <button class="submit" type="submit" name="submit">Go</button>
+<label><input type="radio"  name="app" value="rej">&nbsp;&nbsp;&nbsp;Reject</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button class="submit" type="submit" name="submit" style="padding: 4px 8px";>Go</button>
 </form>
   </div>
 </div>
           </div>
         
       </div>
-   
-    
-      <footer class="footer">
-      <div class="container-fluid">
-          <center><p class="text-muted" style="color:white;">Welcome to the Page</p></center>
-      </div>
-      </footer>
       
 <?php
 //session_start(); // Starting Session
@@ -135,7 +130,7 @@ $dbname = "student";
 $conn = mysql_connect($servername, $username, $password);
 if (isset($_POST['submit'])){
 if (empty($_POST['user_id']) || empty($_POST['comments']) || empty($_POST['app'])) {     
-header("location: ../faculty_man_leave.php");
+header("location: ../admin_man_leave.php");
 }else{
     $app_id=$_POST['user_id'];
     $comment=$_POST['comments'];
@@ -145,19 +140,16 @@ header("location: ../faculty_man_leave.php");
 if($app=='app'){
 mysql_query("UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'", $conn);
 mysql_query("UPDATE student SET num_leave=num_leave+1 where id='$app_id'", $conn);
-header("location: ./faculty_man_leave.php");
+header("location: ./admin_man_leave.php");
 }else if($app=='rej') {
 mysql_query("UPDATE student_leave SET status='Rejected',comments='$comments' WHERE id='$app_id'", $conn);
-header("location: ./faculty_man_leave.php");
+header("location: ./admin_man_leave.php");
 }
 }
 }
 ?>
 
- 
-    
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
