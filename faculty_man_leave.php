@@ -56,7 +56,7 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
                   <li class="active"><a href="faculty_man_leave.php">Manage leave</a></li>
                   <li><a href="faculty_man_stud.php">Manage students</a></li>
                     <li><a href="faculty_report.php">Details</a></li>
-                     <li><a href="login/logout.php">Sign out</a></li>
+                     <li><a href="php/logout.php">Sign out</a></li>
                 </ul>
           </nav></div>
       <div class="container">
