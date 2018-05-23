@@ -52,11 +52,11 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
       <div class="col-lg-12" style="text-align:right;">      
       <nav>
                 <ul class="nav masthead-nav">
-                  <li ><a href="admin.php">Home</a></li>
-                  <li class="active"><a href="admin_man_leave.php">Manage leave</a></li>
-                  <li><a href="admin_man_stud.php">Manage students</a></li>
-                    <li><a href="admin_report.php">Details</a></li>
-                     <li><a href="php/logout.php">Sign out</a></li>
+                  <li ><a href="faculty.php">Home</a></li>
+                  <li class="active"><a href="faculty_man_leave.php">Manage leave</a></li>
+                  <li><a href="faculty_man_stud.php">Manage students</a></li>
+                    <li><a href="faculty_report.php">Details</a></li>
+                     <li><a href="login/logout.php">Sign out</a></li>
                 </ul>
           </nav></div>
       <div class="container">
@@ -130,7 +130,7 @@ $dbname = "student";
 $conn = mysql_connect($servername, $username, $password);
 if (isset($_POST['submit'])){
 if (empty($_POST['user_id']) || empty($_POST['comments']) || empty($_POST['app'])) {     
-header("location: ../admin_man_leave.php");
+header("location: ../faculty_man_leave.php");
 }else{
     $app_id=$_POST['user_id'];
     $comment=$_POST['comments'];
@@ -140,10 +140,10 @@ header("location: ../admin_man_leave.php");
 if($app=='app'){
 mysql_query("UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'", $conn);
 mysql_query("UPDATE student SET num_leave=num_leave+1 where id='$app_id'", $conn);
-header("location: ./admin_man_leave.php");
+header("location: ./faculty_man_leave.php");
 }else if($app=='rej') {
 mysql_query("UPDATE student_leave SET status='Rejected',comments='$comments' WHERE id='$app_id'", $conn);
-header("location: ./admin_man_leave.php");
+header("location: ./faculty_man_leave.php");
 }
 }
 }
