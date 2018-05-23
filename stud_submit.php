@@ -1,22 +1,66 @@
 <?php
 session_start(); // Starting Session
+include 'function.php';
+check(); 
 $error=''; // Variable To Store Error Message
 if (isset($_POST['submit_leave'])) {
     if (empty($_POST['date']) || empty($_POST['days']) || empty($_POST['reason'])) {
-    $error = "INCOMPLETE form Please Fill the Details ";
-    echo $error;
-    }else{
-    $date=$_POST['date'];
-    $days=$_POST['days'];
-    $reason=$_POST['reason'];
+    echo "<script type ='text/JavaScript'>alert('INCOMPLETE form please fill all details')</script>";
+    
+    }
+    else{
+
     $connection = mysql_connect("localhost", "root", "");
     $db = mysql_select_db("student", $connection);
     $key=$_SESSION['login_user'];
-    $query = mysql_query("UPDATE student_leave SET date='$date', days='$days', reason='$reason', status='Pending' where id='$key' ", $connection);
-    //echo $key;
+    $query = mysql_query("select * from student_leave where  id='$key'", $connection);
+    $row = mysql_fetch_assoc($query);
+    $status=$row["status"];
+    $curr_status='Pending';
+    if(!($status==$curr_status)){
+
+    $leave_date=$_POST['date'];
+    $days=$_POST['days'];
+    $curr_date=date('Y-m-d ');
+    $leave_dt = new DateTime($leave_date);
+    $curr_dt = new DateTime($curr_date);
+    
+
+  if ($curr_dt <= $leave_dt) { 
+
+    
+    if($days>0 && $days<15){
+      $reason=$_POST['reason'];
+      $connection = mysql_connect("localhost", "root", "");
+      $db = mysql_select_db("student", $connection);
+      $key=$_SESSION['login_user'];
+
+      $query = mysql_query("UPDATE student_leave SET date='$leave_date', days='$days', reason='$reason', status='Pending' where id='$key' ", $connection);
+    }
+    else{
+        echo '<script language="javascript">';
+            echo 'alert("Please enter valid number of digits for leaves & you can not apply for more than 15 leaves ")';
+            echo '</script>';
+    }
+  }
+  else{
+    echo '<script language="javascript">';
+            echo 'alert("you can not apply leave for back dates.  ")';
+            
+            echo '</script>';
+  }
+  }
+  else{
+    echo '<script language="javascript">';
+            echo 'alert(" you already have one pending leave.")';
+            
+            echo '</script>';
+  }
+  //echo $key;
   // $sql=mysql_query(" UPDATE student_leave SET date='$date', days='$days', reason='$reason', status='p' where ", $connection);
    
-}}
+}
+}
        
 //mysql_close($connection); // Closing Connection
 ?>
@@ -41,6 +85,22 @@ if (isset($_POST['submit_leave'])) {
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        display: inline-block;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+       }
+       input[type=submit]:hover{
+        background-color:  #45a049;
+       }
+    </style>
   </head>
   <body  >
       
@@ -66,22 +126,20 @@ if (isset($_POST['submit_leave'])) {
             
         <div class="col-lg-6 col-lg-offset-2" style="padding-top:40px;">
             <form class="form-horizontal" role="form" method="post" action="">
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Leave From: </label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" id="date" name="date" placeholder="Leave date" value="">
+                </div>
+              </div>
     <div class="form-group">
-        <label for="name" class="col-sm-2 control-label"></label>
+        <label for="number" class="col-sm-2 control-label" >Number of Days:</label>
         <div class="col-sm-10">
-          <label for="date"> Leave Start From </label>
-            <input type="date" class="form-control" id="date" name="date" placeholder="Leave date" value="">
+            <input type="number" class="form-control" id="days" name="days" placeholder="No of days" value="" min="1" max="5">
         </div>
     </div>
     <div class="form-group">
-        <label for="email" class="col-sm-2 control-label"></label>
-        <div class="col-sm-10">
-            <label for="date"> Number of Leaves</label>
-            <input type="text" class="form-control" id="days" name="days" placeholder="Leaves" value="">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="message" class="col-sm-2 control-label"></label>
+        <label for="message" class="col-sm-2 control-label">Reason for Leave</label>
         <div class="col-sm-10">
             <textarea class="form-control" rows="4" name="reason" placeholder="Reason"></textarea>
         </div>
