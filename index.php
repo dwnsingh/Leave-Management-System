@@ -8,7 +8,7 @@ if(isset($_SESSION['login_user'])){
     header("location: student.php");
   }
   else{
-    header("location:admin.php");
+    header("location:faculty.php");
   }
 }
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
         }
         else {  
           
-          header("location: admin.php");	
+          header("location: faculty.php");	
         }
       } 
       else {
