@@ -1,7 +1,6 @@
 <?php
 session_start(); // Starting Session
-include 'function.php';
-check(); 
+
 $error=''; // Variable To Store Error Message
 if (isset($_POST['submit_leave'])) {
     if (empty($_POST['date']) || empty($_POST['days']) || empty($_POST['reason'])) {
@@ -10,11 +9,11 @@ if (isset($_POST['submit_leave'])) {
     }
     else{
 
-    $connection = mysql_connect("localhost", "root", "");
-    $db = mysql_select_db("student", $connection);
+    $connection = mysqli_connect("localhost", "root", "","student");
+    
     $key=$_SESSION['login_user'];
-    $query = mysql_query("select * from student_leave where  id='$key'", $connection);
-    $row = mysql_fetch_assoc($query);
+    $query = mysqli_query($connection,"SELECT * from student_leave where  id='$key'",);
+    $row = mysqli_fetch_assoc($query);
     $status=$row["status"];
     $curr_status='Pending';
     if(!($status==$curr_status)){
@@ -31,11 +30,11 @@ if (isset($_POST['submit_leave'])) {
     
     if($days>0 && $days<15){
       $reason=$_POST['reason'];
-      $connection = mysql_connect("localhost", "root", "");
-      $db = mysql_select_db("student", $connection);
+      // $connection = mysql_connect("localhost", "root", "");
+      // $db = mysql_select_db("student", $connection);
       $key=$_SESSION['login_user'];
 
-      $query = mysql_query("UPDATE student_leave SET date='$leave_date', days='$days', reason='$reason', status='Pending' where id='$key' ", $connection);
+      $query = mysqli_query( $connection, "UPDATE student_leave SET date='$leave_date', days='$days', reason='$reason', status='Pending' where id='$key' ");
     }
     else{
         echo '<script language="javascript">';
@@ -61,8 +60,7 @@ if (isset($_POST['submit_leave'])) {
    
 }
 }
-       
-//mysql_close($connection); // Closing Connection
+
 ?>
  
 <!DOCTYPE html>
@@ -79,12 +77,7 @@ if (isset($_POST['submit_leave'])) {
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
     <style type="text/css">
       input[type=submit] {
         width: 100%;
