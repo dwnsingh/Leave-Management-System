@@ -1,40 +1,11 @@
 <?php
 session_start();    
 
-/*$servername = "localhost";
-$user1 = "root";
-$password = "";
-$dbname = "student";
-//echo "haiiii";
-// Create connection
-$conn = mysql_connect($servername, $user1, $password);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysql_error());
-}*/
 
 require 'php/connect.php';
-//echo $_SESSION['login_user'];
+
 $key=$_SESSION['login_user'];
-//echo $key;
 
-/*mysql_select_db("student", $conn);
-$sql = mysql_query("select * from faculty where id='$key' ", $conn);
-if(mysql_num_rows($sql) > 0){
-    while($row = mysql_fetch_assoc($sql)){
-        $name=$row["name"];
-        $img=$row["image"];
-        $id=$row["id"];
-        $phone=$row["mob_no"];
-        $email=$row["email"];
-    }
-    
-}
-else{
-echo "not found dear";
-}
-
-*/
 
 $sql="SELECT `id`,`name`,`image`,`email` FROM `admin` WHERE `id`='$key'";
       $query=mysqli_query($conn,$sql);
@@ -67,7 +38,7 @@ $sql="SELECT `id`,`name`,`image`,`email` FROM `admin` WHERE `id`='$key'";
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+   
     <title>Leave Management Portal</title>
 
     <!-- Bootstrap -->
@@ -75,12 +46,7 @@ $sql="SELECT `id`,`name`,`image`,`email` FROM `admin` WHERE `id`='$key'";
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
   </head>
   <body  >
       
@@ -106,7 +72,7 @@ $sql="SELECT `id`,`name`,`image`,`email` FROM `admin` WHERE `id`='$key'";
         </div>
         <div class="row">
                 <div class="col-lg-4 col-md-6" style="padding:0 0 0 200px;">
-                    <img src="<?php echo $img; ?>"  class="img-thumbnail" height="300px" width="200px;">
+                    <img src="img/default.png" class="img-thumbnail" height="300px" width="200px;">
                 </div>
                 <div class="col-lg-6 col-md-5" style="border-left:thin solid #333;margin-left:50px;padding-left:40px;">
                     <h4>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<?php echo $name;        ?></h4><br>
