@@ -6,8 +6,8 @@ $password = "";
 $dbname = "student";
 
 // Create connection
-$conn = mysql_connect($servername, $username, $password);
-mysql_select_db("student", $conn);
+$conn = mysqli_connect($servername, $username, $password,$dbname);
+
 if (isset($_POST['add'])){
     if (empty($_POST['a_user_id']) || empty($_POST['a_name']) || empty($_POST['a_pass'])){
     }else{
@@ -17,9 +17,9 @@ if (isset($_POST['add'])){
     $phone=$_POST['a_phone'];
     $aemail=$_POST['a_email'];
     $apass=$_POST['a_pass'];
-    mysql_query("insert into student_leave values('$aid','','','','','$aname','');", $conn);
-    mysql_query("insert into student values('$aname','$aid','0','$phone','$pno','$aemail','$apass','img/default.png','stud');", $conn);
-    mysql_query("insert into login_table values('$aid','$apass','stud');", $conn);
+    mysqli_query($conn,"INSERT into student_leave values('$aid','','','','','$aname','');");
+    mysqli_query($conn,"INSERT into student values('$aname','$aid','0','$phone','$pno','$aemail','$apass','img/default.png','stud');");
+    mysqli_query( $conn,"INSERT into login_table values('$aid','$apass','stud');");
     }
 
 }
@@ -28,9 +28,9 @@ if (isset($_POST['delete'])){
     if (empty($_POST['d_user_id'])){
     }else{    
     $did=$_POST['d_user_id'];    
-    mysql_query("delete from student where id='$did';", $conn);
-    mysql_query("delete from student_leave where id='$did';", $conn);
-    mysql_query("delete from login_table where user_id='$did';", $conn);
+    mysqli_query($conn,"DELETE from student where id='$did';");
+    mysqli_query( $conn,"DELETE from student_leave where id='$did';");
+    mysqli_query( $conn,"DELETE from login_table where user_id='$did';");
     }
 
 }
@@ -50,12 +50,6 @@ if (isset($_POST['delete'])){
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body  >
       
