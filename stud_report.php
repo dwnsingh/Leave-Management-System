@@ -1,24 +1,22 @@
 <?php
 session_start(); // Starting Session
-    //$date=$_POST['date'];
-    //$days=$_POST['days'];
-    //$reason=$_POST['reason'];
-    $connection = mysql_connect("localhost", "root", "");
-    $db = mysql_select_db("student", $connection);
+  
+    $connection = mysqli_connect("localhost", "root", "","student");
+    
     $key=$_SESSION['login_user'];
-    $query = mysql_query("select * from student_leave where  id='$key'", $connection);
-    $row = mysql_fetch_assoc($query);
+    $query = mysqli_query($connection,"SELECT * from student_leave where  id='$key'");
+    $row = mysqli_fetch_assoc($query);
         $date=$row["date"];
         $days=$row["days"];
         $reason=$row["reason"];
         $status=$row["status"];
-    $sql = mysql_query("select num_leave from student where  id='$key'", $connection);
-    $rows = mysql_fetch_assoc($sql);
+    $sql = mysqli_query($connection, "SELECT num_leave from student where  id='$key'");
+    $rows = mysqli_fetch_assoc($sql);
         $num=$rows["num_leave"];
 
         
       
-mysql_close($connection); // Closing Connection
+mysqli_close($connection); // Closing Connection
 ?>
  
 <!DOCTYPE html>
@@ -35,12 +33,7 @@ mysql_close($connection); // Closing Connection
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+   
   </head>
   <body  >
       
