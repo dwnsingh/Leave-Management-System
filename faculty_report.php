@@ -4,18 +4,18 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "student";
-//echo "haiiii";
+
 // Create connection
-$conn = mysql_connect($servername, $username, $password);
+$conn = mysqli_connect($servername, $username, $password,$dbname);
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysql_error());
 }
-//echo $_SESSION['login_user'];
+
 $key=$_SESSION['login_user'];
-//echo $key;
-mysql_select_db("student", $conn);
-$sql = mysql_query("select * from student where type='stud';", $conn);
+
+
+$sql = mysqli_query($conn,"SELECT * from student where type='stud';");
 ?>
 
 
@@ -33,12 +33,7 @@ $sql = mysql_query("select * from student where type='stud';", $conn);
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
   </head>
   <body  >
       
@@ -73,9 +68,9 @@ $sql = mysql_query("select * from student where type='stud';", $conn);
                   <td>Leaves</td>
                   </tr>
                   <?php
-                  $count=mysql_num_rows($sql);
+                  $count=mysqli_num_rows($sql);
                 if ($count>0){
-                    while($row = mysql_fetch_assoc($sql)){
+                    while($row = mysqli_fetch_assoc($sql)){
                     ?>
                   <tr >
                   <td><?php echo $row["id"];  ?></td>
@@ -107,11 +102,7 @@ $sql = mysql_query("select * from student where type='stud';", $conn);
       </div>
       </footer>
       
-
- 
-    
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
