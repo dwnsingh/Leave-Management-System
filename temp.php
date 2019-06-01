@@ -64,8 +64,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "student";
-//echo "haiiii";
-// Create connection
+
 $conn = mysql_connect($servername, $username, $password);
 if (isset($_POST['submit'])){
 if (empty($_POST['user_id']) || empty($_POST['comments']) || empty($_POST['app'])) {     
@@ -75,7 +74,7 @@ header("location: ../faculty_man_leave.php");
     $comment=$_POST['comments'];
     $app=$_POST['app'];
     $rej=$_POST['rej'];
-   // mysql_select_db("student", $conn);
+   
 if($app=='app'){
 mysql_query("UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'", $conn);
 mysql_query("UPDATE student SET num_leave=num_leave+1 where id='$app_id'", $conn);        
@@ -87,27 +86,3 @@ header("location: ../faculty_man_leave.php");
 }
 }
 ?>
-
-
-
-
-
-
------------------------
-if (empty($_POST['user_id']) || empty($_POST['comments']) || empty($_POST['app'])) {     
-header("location: ../faculty_man_leave.php");
-}else{
-    $app_id=$_POST['user_id'];
-    $comment=$_POST['comments'];
-    $app=$_POST['app'];
-    $rej=$_POST['rej'];
-   // mysql_select_db("student", $conn);
-if($app=='app'){
-mysql_query("UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'", $conn);
-mysql_query("UPDATE student SET num_leave=num_leave+1 where id='$app_id'", $conn);        
-header("location: ../faculty_man_leave.php");
-}else if($app=='rej') {
-mysql_query("UPDATE student_leave SET status='Rejected',comments='$comments' WHERE id='$app_id'", $conn);
-header("location: ../faculty_man_leave.php");
-}
-}
