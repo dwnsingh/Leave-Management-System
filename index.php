@@ -22,21 +22,20 @@ if (isset($_POST['submit'])) {
       $username=$_POST['username'];
       $password=$_POST['password'];
       $password_hash=md5($password);
-// Establishing Connection with Server by passing server_name, user_id and password as a parameter//
-      $connection = mysql_connect("localhost", "root", "");
-   // echo $connection;
+
+      $connection = mysqli_connect("localhost", "root", "","student");
+ 
 // To protect MySQL injection for Security purpose
       $username = stripslashes($username);
       $password = stripslashes($password);
-      $username = mysql_real_escape_string($username);
-      $password = mysql_real_escape_string($password);
-// Selecting Database
-      $db = mysql_select_db("student", $connection);
+    
+      
 // SQL query to fetch information of registerd users and finds user match.
-      $query = mysql_query("select * from login_table where password='$password' AND user_id='$username'", $connection);
-      $rows = mysql_num_rows($query);
-      $row = mysql_fetch_assoc($query);
-      if ($rows == 1) {
+      $sql = "SELECT * FROM login_table WHERE password= '$password' AND user_id= '$username' ";
+      $result  = mysqli_query($connection,$sql);
+      $rows = mysqli_num_rows($result );
+      $row = mysqli_fetch_assoc($result );
+      if ($rows > 0) {
         $_SESSION['login_user']=$username;
         $_SESSION['usertype'] = $row["type"]; // Initializing Session
         if ($row["type"]=="stud") {
@@ -53,7 +52,7 @@ if (isset($_POST['submit'])) {
           alert('Username or Password is invalid')</script>";
   
       }
-    mysql_close($connection); // Closing Connection
+    mysqli_close($connection); // Closing Connection
     } 
 }
 ?>
