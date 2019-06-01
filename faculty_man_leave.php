@@ -1,22 +1,21 @@
 <?php
 session_start();    
-include 'function.php';
-check(); 
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "student";
 // Create connection
-$conn = mysql_connect($servername, $username, $password);
+$conn = mysqli_connect($servername, $username, $password,$dbname);
 // Check connection
 if (!$conn) {
-    die("Connection failed: " . mysql_error());
+    die("Connection failed: " . mysqli_error());
 }
-//echo $_SESSION['login_user'];
+
 $key=$_SESSION['login_user'];
-//echo $key;
-mysql_select_db("student", $conn);
-$sql = mysql_query("select * from student_leave where status='Pending' ", $conn);
+
+
+$sql = mysqli_query( $conn,"SELECT * from student_leave where status='Pending' ");
 ?>
 
 
@@ -26,20 +25,15 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
     <title>Leave Management Portal</title>
 
-    <!-- Bootstrap -->
+    
     <link href="css/bootstrap.css" rel="stylesheet">
        <link href="css/signin.css" rel="stylesheet">
       <link href="css/style.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  
   </head>
   <body  >
       
@@ -76,10 +70,10 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
                   <?php
 
                     $i=1;
-                  $count=mysql_num_rows($sql);
+                  $count=mysqli_num_rows($sql);
                   //$data=;
                 if ($count>0){
-                    while($row = mysql_fetch_assoc($sql)){
+                    while($row = mysqli_fetch_assoc($sql)){
                     ?>
                   <tr >
                   <td><?php echo $row["id"];
@@ -119,33 +113,27 @@ $sql = mysql_query("select * from student_leave where status='Pending' ", $conn)
       </div>
       
 <?php
-//session_start(); // Starting Session
-//session_start();    
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "student";
-//echo "haiiii";
-// Create connection
-$conn = mysql_connect($servername, $username, $password);
+
 if (isset($_POST['submit'])){
 if (empty($_POST['user_id']) || empty($_POST['comments']) || empty($_POST['app'])) {     
-header("location: ../faculty_man_leave.php");
-}else{
-    $app_id=$_POST['user_id'];
-    $comment=$_POST['comments'];
-    $app=$_POST['app'];
-    $rej=$_POST['rej'];
- mysql_select_db("student", $conn);
-if($app=='app'){
-mysql_query("UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'", $conn);
-mysql_query("UPDATE student SET num_leave=num_leave+1 where id='$app_id'", $conn);
-header("location: ./faculty_man_leave.php");
-}else if($app=='rej') {
-mysql_query("UPDATE student_leave SET status='Rejected',comments='$comments' WHERE id='$app_id'", $conn);
-header("location: ./faculty_man_leave.php");
+    header("location: ../faculty_man_leave.php");
 }
-}
+else{
+      $app_id=$_POST['user_id'];
+      $comment=$_POST['comments'];
+      $app=$_POST['app'];
+      $rej=$_POST['rej'];
+   
+  if($app=='app'){
+      mysqli_query($conn,"UPDATE student_leave SET status='Approved',comments='$comments' WHERE id='$app_id'");
+      mysqli_query( $conn,"UPDATE student SET num_leave=num_leave+1 where id='$app_id'");
+      header("location: ./faculty_man_leave.php");
+  }
+  else if($app=='rej') {
+      mysqli_query( $conn,"UPDATE student_leave SET status='Rejected',comments='$comments' WHERE id='$app_id'");
+      header("location: ./faculty_man_leave.php");
+    }
+  }
 }
 ?>
 
